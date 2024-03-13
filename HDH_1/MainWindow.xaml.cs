@@ -53,8 +53,8 @@ namespace HDH_1
 		{
 			List<Process> processes = GetDataFromDataGrid();
 			FCFS(processes);
-			//DrawGanttChart(processes);
-			dataGrid.ItemsSource = null; // Đặt ItemsSource về null trước khi cập nhật dữ liệu mới
+			DrawGanttChart(processes);
+			dataGrid.ItemsSource = null;
 			dataGrid.ItemsSource = processes;
 		}
 		private List<Process> GetDataFromDataGrid()
