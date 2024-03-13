@@ -90,13 +90,13 @@ namespace HDH_1
 				// Cập nhật thời gian kết thúc của quá trình
 				currentTime = Math.Max(currentTime, process.ArrivalTime) + process.BurstTime;
 
-				// Hiển thị thông tin
-				Console.WriteLine($"Process ID: {process.ProcessID}, Arrival Time: {process.ArrivalTime}, Burst Time: {process.BurstTime}, Waiting Time: {waitingTime}");
+				          
 			}
 
 			// Tính thời gian trung bình chờ đợi
 			double averageWaitingTime = totalWaitingTime / processes.Count;
-			Console.WriteLine($"Average Waiting Time: {averageWaitingTime}");
+			// Hiển thị thông tin
+			averageWaitingTimeTextBox.Text = averageWaitingTime.ToString();
 		}
 
 		private void DrawGanttChart(List<Process> processes)
