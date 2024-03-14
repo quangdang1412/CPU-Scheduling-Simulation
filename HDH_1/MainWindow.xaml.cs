@@ -80,22 +80,17 @@ namespace HDH_1
 
 			foreach (var process in processes.OrderBy(p => p.ArrivalTime))
 			{
-				// Tính thời gian chờ đợi
 				double waitingTime = Math.Max(0, currentTime - process.ArrivalTime);
 				totalWaitingTime += waitingTime;
 
-				// Gán thời gian chờ đợi cho quá trình
 				process.WaitingTime = waitingTime;
 
-				// Cập nhật thời gian kết thúc của quá trình
 				currentTime = Math.Max(currentTime, process.ArrivalTime) + process.BurstTime;
 
-				          
 			}
 
-			// Tính thời gian trung bình chờ đợi
 			double averageWaitingTime = totalWaitingTime / processes.Count;
-			// Hiển thị thông tin
+   
 			averageWaitingTimeTextBox.Text = averageWaitingTime.ToString();
 		}
 
@@ -108,7 +103,6 @@ namespace HDH_1
 			double currentTime = 0;
 			double totalWidth = 0;
 
-			// Mảng màu để gán màu cho mỗi khoảng thời gian
 			Brush[] colors = { Brushes.Blue, Brushes.Green, Brushes.Red, Brushes.Orange, Brushes.Yellow };
 
 			TextBlock startBlock = new TextBlock();
@@ -119,11 +113,9 @@ namespace HDH_1
 
 			foreach (var process in processes.OrderBy(p => p.ArrivalTime))
 			{
-				// Tính toán thời gian bắt đầu và kết thúc của quá trình trên biểu đồ Gantt
 				double startTime = Math.Max(currentTime, process.ArrivalTime);
 				double endTime = startTime + process.BurstTime;
 
-				// Vẽ thanh trạng thái của quá trình trên biểu đồ Gantt
 				Rectangle rect = new Rectangle();
 				rect.Fill = colors[(int)currentTime % colors.Length]; // Lấy màu từ mảng màu
 				rect.Width = process.BurstTime * widthPerUnit;
@@ -133,19 +125,16 @@ namespace HDH_1
 				canvas.Children.Add(rect);
 
 
-				// Vẽ thời gian kết thúc của mỗi quá trình ở cuối của thanh
 				TextBlock endTextBlock = new TextBlock();
 				endTextBlock.Text = (int)endTime + ""; // Thời gian kết thúc của quá trình
 				Canvas.SetLeft(endTextBlock, totalWidth + (endTime - currentTime) * widthPerUnit - 10); // Đặt vị trí cho TextBlock ở cuối của thanh, trừ 10 để căn chỉnh
 				Canvas.SetTop(endTextBlock, topPosition - 20);
 				canvas.Children.Add(endTextBlock);
 
-				// Cập nhật thời gian hiện tại và chiều rộng tổng cộng của biểu đồ
 				currentTime = endTime;
 				totalWidth += rect.Width;
 			}
 
-			// Đặt kích thước cho Canvas dựa trên kích thước của biểu đồ Gantt
 			canvas.Width = totalWidth;
 			canvas.Height = topPosition + heightPerProcess; // Chiều cao chỉ cần đủ để hiển thị dòng quá trình
 		}
